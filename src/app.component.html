@@ -1,0 +1,412 @@
+<!-- Global Noise Overlay -->
+<div class="noise-overlay"></div>
+
+<!-- Navigation -->
+<nav class="fixed top-0 w-full h-[90px] z-[100] bg-background/80 backdrop-blur-md border-b border-white/5 flex items-center">
+  <div class="max-w-[1400px] mx-auto w-full px-8 flex justify-between items-center">
+    <div class="font-head text-[2.5rem] font-bold tracking-[2px] flex items-center gap-[10px] text-text">
+      <div class="w-5 h-5 bg-accent rotate-45"></div>OBELISK
+    </div>
+    
+    <div class="hidden md:flex gap-10 font-head text-[1.1rem] font-semibold tracking-widest uppercase">
+      <a href="#arch" class="relative hover:text-white transition-colors after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">System</a>
+      <a href="#pipeline" class="relative hover:text-white transition-colors after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Pipeline</a>
+      <a href="#mesh" class="relative hover:text-white transition-colors after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Network</a>
+      <a href="#engine" class="relative hover:text-white transition-colors after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Engine</a>
+      <a href="#terminal" class="relative hover:text-white transition-colors after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-accent hover:after:w-full after:transition-all">Access</a>
+    </div>
+
+    <button class="hidden md:inline-flex items-center justify-center px-6 py-3 font-head text-lg tracking-wider uppercase bg-accent text-black font-bold border-none cursor-pointer hover:bg-white transition-colors">
+      Initialize
+    </button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero-section relative h-screen w-full flex flex-col items-center justify-center overflow-hidden perspective-[1200px] pt-[90px] pb-20 z-[2] bg-background">
+  <canvas #particleCanvas class="absolute top-0 left-0 w-full h-full z-0 opacity-60"></canvas>
+  
+  <div #monolithWrapper class="monolith-wrapper">
+    <div class="monolith">
+      <!-- Front Face -->
+      <div class="face front">
+        <div class="text-center w-full px-5">
+          <span class="text-[0.8rem] tracking-[2px] text-white mb-2.5 block font-body">CORE TEMP</span>
+          <span class="text-[2.5rem] font-head font-bold leading-none block">42°C</span>
+          <div class="w-2.5 h-2.5 bg-accent rounded-full mx-auto my-5 shadow-[0_0_10px_#ff003c] animate-[pulse_1s_infinite_alternate]"></div>
+          <span class="text-[0.8rem] tracking-[2px] text-white block font-body">STATUS: ONLINE</span>
+        </div>
+      </div>
+      <!-- Back Face -->
+      <div class="face back">
+        <div class="text-center w-full px-5">
+          <div class="text-[3rem] mb-2.5 border-2 border-accent p-2.5 rounded-full w-20 h-20 flex items-center justify-center mx-auto">🔒</div>
+          <span class="text-[1.5rem] font-head font-bold leading-none block">LOCKED</span>
+          <span class="text-[0.8rem] tracking-[2px] text-white mt-2.5 block font-body">AES-256</span>
+        </div>
+      </div>
+      <!-- Right Face -->
+      <div class="face right">
+        <div class="rotate-90">
+          <span class="text-[0.8rem] tracking-[2px] text-white text-center block mb-2 font-body">NETWORK I/O</span>
+          <div class="flex gap-1 h-[100px] items-end justify-center">
+            <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+          </div>
+        </div>
+      </div>
+      <!-- Left Face -->
+      <div class="face left">
+        <span class="text-[0.8rem] tracking-[2px] text-white mb-4 block font-body">STORAGE</span>
+        <div class="grid grid-cols-4 gap-1.5 w-[80%]">
+          <div class="rack-light active"></div><div class="rack-light"></div><div class="rack-light active"></div><div class="rack-light"></div>
+          <div class="rack-light"></div><div class="rack-light active"></div><div class="rack-light"></div><div class="rack-light active"></div>
+        </div>
+      </div>
+      <!-- Top/Bottom Faces -->
+      <div class="face top font-head text-2xl">SYS</div>
+      <div class="face bottom"></div>
+    </div>
+  </div>
+
+  <div class="z-10 text-center relative w-full max-w-[1200px] flex flex-col justify-center h-full -mt-12 pointer-events-none">
+    <h1 class="text-[clamp(4rem,10vw,11rem)] text-transparent stroke-text leading-[0.85] mb-8 tracking-tighter font-medium font-head">
+      <span class="hero-title-1 block" style="-webkit-text-stroke: 2px #e0e0e0;">SYSTEM</span>
+      <span class="hero-title-2 block text-text text-shadow-glow" style="text-shadow: 0 0 20px rgba(255,255,255,0.3);">CORE</span>
+      <span class="hero-title-3 block" style="-webkit-text-stroke: 2px #e0e0e0;">ONLINE</span>
+    </h1>
+    <p class="hero-subtitle text-[1.2rem] max-w-[550px] mx-auto text-text-dim bg-background/85 border border-white/10 p-4 backdrop-blur-md font-body">
+      The absolute standard for decentralized computation. Zero latency. Infinite scale. Pure power.
+    </p>
+  </div>
+
+  <div class="z-20 absolute bottom-10 left-1/2 -translate-x-1/2 w-full flex justify-center gap-4">
+    <div class="p-2.5 inline-block">
+      <button class="group relative overflow-hidden inline-flex items-center justify-center py-4 px-10 font-head text-[1.4rem] tracking-wider uppercase bg-black/80 text-text border border-border transition-all hover:text-white hover:border-accent hover:shadow-[0_0_30px_rgba(255,0,60,0.6)]">
+        <span class="relative z-10">Deploy Instance</span>
+        <div class="absolute top-0 left-0 w-0 h-full bg-accent z-0 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] -skew-x-12 -translate-x-2.5 group-hover:w-[150%]"></div>
+      </button>
+    </div>
+    <div class="p-2.5 inline-block">
+      <button class="group relative overflow-hidden inline-flex items-center justify-center py-4 px-10 font-head text-[1.4rem] tracking-wider uppercase bg-black/80 text-[#888] border border-[#444] transition-all hover:text-white hover:border-accent">
+        <span class="relative z-10">Documentation</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Marquee Stream Bar -->
+<div class="bg-accent text-black py-4 font-head text-[1.4rem] font-semibold overflow-hidden whitespace-nowrap relative z-[2] border-y border-white">
+  <div class="inline-block animate-[marquee_10s_linear_infinite]">
+    // SYSTEM STATUS: OPTIMAL // UPTIME: 99.9999% // NODES ACTIVE: 4,021,202 // LATENCY: 12MS // THREAT LEVEL: 0 // ENCRYPTION: MIL-STD-810 // SYSTEM STATUS: OPTIMAL // UPTIME: 99.9999% // NODES ACTIVE: 4,021,202 // LATENCY: 12MS // THREAT LEVEL: 0 // ENCRYPTION: MIL-STD-810 //
+  </div>
+</div>
+
+<!-- Features Grid -->
+<section class="relative py-32 bg-background z-[2]" id="arch">
+  <div class="max-w-[1400px] mx-auto px-8">
+    <h2 class="font-head text-[5rem] mb-20 border-l-8 border-accent pl-8 leading-none uppercase text-white">Capabilities</h2>
+    
+    <div #cardsContainer class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card Template -->
+      @for (feature of [
+        {id: '01', title: 'Atomic Sync', desc: 'Data replicated across the mesh network in nanoseconds. Physics is the only limitation.'},
+        {id: '02', title: 'Quantum Shield', desc: 'Post-quantum cryptography protects your payloads from future computation threats.'},
+        {id: '03', title: 'Edge Compute', desc: 'Logic executes at the edge. Your users never hit the origin server, reducing load by 99%.'},
+        {id: '04', title: 'Self Healing', desc: 'Nodes automatically reroute traffic if a region goes dark. 100% continuity.'},
+        {id: '05', title: 'AI Optimized', desc: 'Traffic patterns are analyzed by our neural core to pre-scale resources.'},
+        {id: '06', title: 'Dark Fiber', desc: 'We own the pipes. Private backbone connectivity between all major metros.'}
+      ]; track feature.id) {
+        <div class="tech-card group bg-[#141414]/50 border border-white/10 p-12 relative overflow-hidden flex flex-col justify-between min-h-[400px] rounded text-white
+          before:content-[''] before:absolute before:inset-0 before:bg-gradient-radial before:from-accent/25 before:to-transparent before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100
+          after:content-[''] after:absolute after:inset-0 after:bg-[url('https://grainy-gradients.vercel.app/noise.svg')] after:opacity-0 hover:after:opacity-20 after:transition-opacity">
+          
+          <div class="w-[60px] h-[60px] bg-[#111] mb-8 rounded-lg flex items-center justify-center text-accent text-2xl border border-white/10 z-[2] relative font-head font-bold">
+            {{feature.id}}
+          </div>
+          <h3 class="font-head text-[3rem] mb-4 z-[2] relative leading-none">{{feature.title}}</h3>
+          <p class="font-body text-[1.1rem] text-text-dim z-[2] relative">{{feature.desc}}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Pipeline Horizontal Scroll -->
+<section class="pipeline-section overflow-hidden z-[2] relative" id="pipeline">
+  <div class="pin-wrap-container w-full h-screen flex bg-black relative overflow-hidden">
+    <div class="pin-wrap h-full flex items-center px-[5vw] gap-[5vw] w-max">
+      
+      <!-- Horizontal Item 1 -->
+      <div class="horiz-card w-[85vw] md:w-[60vw] h-[70vh] bg-[#080808] border border-border shrink-0 flex flex-col justify-end p-8 md:p-16 relative overflow-hidden">
+        <img src="https://picsum.photos/seed/tech1/1600/900" class="horiz-img absolute top-0 left-0 w-full h-full object-cover scale-[1.5] opacity-40 grayscale contrast-125 z-0 transition-all duration-500 group-hover:grayscale-0" alt="Data Center">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-accent/10 z-[1]"></div>
+        <div class="relative z-[2]">
+          <span class="font-head text-[5rem] md:text-[8rem] leading-[0.8] text-accent mb-4 block">01</span>
+          <h3 class="font-head text-[2.5rem] md:text-[4rem] mb-4 text-white leading-[0.9]">DATA INGESTION</h3>
+          <p class="font-body text-[1.4rem] max-w-[600px] mb-6 text-white">Stream petabytes of data through our firehose API.</p>
+          <p class="font-body text-[1.1rem] text-[#888] max-w-[550px] leading-relaxed border-l-2 border-accent pl-4">Encryption is applied at the source using AES-256. We guarantee 0% packet loss during transmission.</p>
+        </div>
+      </div>
+
+      <!-- Horizontal Item 2 -->
+      <div class="horiz-card w-[85vw] md:w-[60vw] h-[70vh] bg-[#080808] border border-border shrink-0 flex flex-col justify-end p-8 md:p-16 relative overflow-hidden">
+        <img src="https://picsum.photos/seed/tech2/1600/900" class="horiz-img absolute top-0 left-0 w-full h-full object-cover scale-[1.5] opacity-40 grayscale contrast-125 z-0" alt="Neural Net">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-accent/10 z-[1]"></div>
+        <div class="relative z-[2]">
+          <span class="font-head text-[5rem] md:text-[8rem] leading-[0.8] text-accent mb-4 block">02</span>
+          <h3 class="font-head text-[2.5rem] md:text-[4rem] mb-4 text-white leading-[0.9]">NEURAL PROCESSING</h3>
+          <p class="font-body text-[1.4rem] max-w-[600px] mb-6 text-white">Our proprietary AI mesh analyzes patterns instantly.</p>
+          <p class="font-body text-[1.1rem] text-[#888] max-w-[550px] leading-relaxed border-l-2 border-accent pl-4">Automatic load balancing kicks in milliseconds before saturation occurs.</p>
+        </div>
+      </div>
+
+      <!-- Horizontal Item 3 -->
+      <div class="horiz-card w-[85vw] md:w-[60vw] h-[70vh] bg-[#080808] border border-border shrink-0 flex flex-col justify-end p-8 md:p-16 relative overflow-hidden">
+        <img src="https://picsum.photos/seed/tech3/1600/900" class="horiz-img absolute top-0 left-0 w-full h-full object-cover scale-[1.5] opacity-40 grayscale contrast-125 z-0" alt="Global Net">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-accent/10 z-[1]"></div>
+        <div class="relative z-[2]">
+          <span class="font-head text-[5rem] md:text-[8rem] leading-[0.8] text-accent mb-4 block">03</span>
+          <h3 class="font-head text-[2.5rem] md:text-[4rem] mb-4 text-white leading-[0.9]">GLOBAL DISTRIBUTION</h3>
+          <p class="font-body text-[1.4rem] max-w-[600px] mb-6 text-white">Content is cached in 450+ PoPs worldwide.</p>
+          <p class="font-body text-[1.1rem] text-[#888] max-w-[550px] leading-relaxed border-l-2 border-accent pl-4">Assets are replicated to the edge closest to your user, cutting TTFB to under 20ms.</p>
+        </div>
+      </div>
+
+      <!-- Horizontal Item 4 -->
+      <div class="horiz-card w-[85vw] md:w-[60vw] h-[70vh] bg-[#080808] border border-accent shrink-0 flex flex-col justify-end p-8 md:p-16 relative overflow-hidden">
+        <img src="https://picsum.photos/seed/tech4/1600/900" class="horiz-img absolute top-0 left-0 w-full h-full object-cover scale-[1.5] opacity-40 grayscale contrast-125 z-0" alt="Execution">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-accent/10 z-[1]"></div>
+        <div class="relative z-[2]">
+          <span class="font-head text-[5rem] md:text-[8rem] leading-[0.8] text-accent mb-4 block">04</span>
+          <h3 class="font-head text-[2.5rem] md:text-[4rem] mb-4 text-accent leading-[0.9]">EXECUTION</h3>
+          <p class="font-body text-[1.4rem] max-w-[600px] mb-6 text-white">A system that never sleeps, never fails.</p>
+          <p class="font-body text-[1.1rem] text-[#888] max-w-[550px] leading-relaxed border-l-2 border-accent pl-4">Serverless functions run in isolation with zero cold starts, guaranteed.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Neural Grid -->
+<section class="neural-section relative py-32 bg-[#050505] z-[2] overflow-hidden" id="mesh">
+  <div #neuralGrid class="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"></div>
+  <div class="relative z-[2] text-center bg-radial-fade p-16 max-w-[1000px] mx-auto">
+    <h2 class="font-head text-[clamp(3rem,8vw,7rem)] mb-8 text-white text-shadow-glow">GLOBAL MESH</h2>
+    <p class="font-body text-2xl max-w-[700px] mx-auto mb-16 text-[#ccc] leading-relaxed">
+      Our infrastructure spans 450+ Points of Presence across 120 countries. 
+      Experience edge computing with zero compromises. We connect the world 
+      faster than the speed of thought.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-white/10 pt-12 max-w-[900px] mx-auto">
+      <div class="text-center">
+        <h4 class="font-head text-5xl text-accent mb-2">450+</h4>
+        <p class="text-sm tracking-[2px] text-[#888] uppercase">Edge Nodes</p>
+      </div>
+      <div class="text-center">
+        <h4 class="font-head text-5xl text-accent mb-2">120TB</h4>
+        <p class="text-sm tracking-[2px] text-[#888] uppercase">Backbone Capacity</p>
+      </div>
+      <div class="text-center">
+        <h4 class="font-head text-5xl text-accent mb-2">&lt;10ms</h4>
+        <p class="text-sm tracking-[2px] text-[#888] uppercase">Global Latency</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- System Pulse -->
+<section class="pulse-section py-40 bg-[#080808] z-[2] relative overflow-hidden">
+  <div class="max-w-[1400px] mx-auto px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+      
+      <!-- Text Side -->
+      <div>
+        <h2 class="font-head text-[4rem] mb-6 text-white uppercase">Live Infrastructure</h2>
+        <p class="font-body text-[1.2rem] mb-8 text-text-dim">
+          Monitor your entire stack in real-time. Our dashboard provides granular control over every aspect of your deployment.
+        </p>
+        <ul class="font-body text-text-dim leading-loose mb-8">
+          <li>&gt; Real-time latency tracking per region</li>
+          <li>&gt; Automated DDoS mitigation logs</li>
+          <li>&gt; Predictive resource allocation</li>
+        </ul>
+        <div class="flex gap-12 mt-8 border-t border-[#333] pt-8">
+          <div>
+            <h4 class="font-head text-[2.5rem] text-accent mb-2">99.999%</h4>
+            <span class="text-sm text-text-dim tracking-wider">UPTIME SLA</span>
+          </div>
+          <div>
+            <h4 class="font-head text-[2.5rem] text-accent mb-2">&lt;5ms</h4>
+            <span class="text-sm text-text-dim tracking-wider">GLOBAL LATENCY</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Side -->
+      <div class="relative h-[500px] perspective-[1000px]">
+        <!-- Main Card -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[350px] bg-[#0f0f0f]/90 border border-[#333] rounded-lg backdrop-blur-md shadow-2xl z-10 p-6 flex flex-col transition-transform duration-500">
+          <div class="flex justify-between mb-4 border-b border-[#333] pb-2.5">
+            <span class="font-head text-xl text-white">TRAFFIC_OUT</span>
+            <span class="text-accent text-xs flex items-center gap-1.5 before:content-[''] before:w-1.5 before:h-1.5 before:bg-accent before:rounded-full before:shadow-[0_0_5px_#ff003c] before:animate-[blinkRack_1s_infinite]">LIVE</span>
+          </div>
+          <div #liveChart class="flex-1 flex items-end gap-1.5 relative overflow-hidden"></div>
+        </div>
+
+        <!-- Floating Card 1 -->
+        <div class="absolute top-[10%] -right-[5%] w-[200px] p-4 bg-black border border-accent rounded-lg z-20 animate-[float_6s_ease-in-out_infinite]">
+          <div class="flex justify-between border-b border-[#333] mb-2 pb-1">
+            <span class="font-head text-sm text-white">CONFIG.YAML</span>
+          </div>
+          <div class="font-mono text-[0.7rem] text-[#888] leading-tight">
+            replicas: 50<br>region: "us-east"<br>scaling: auto<br>max_cost: inf
+          </div>
+        </div>
+
+        <!-- Floating Card 2 -->
+        <div class="absolute bottom-0 -left-[5%] w-[180px] p-4 bg-[#0a0a0a] border border-[#333] rounded-lg z-20 animate-[float_5s_ease-in-out_infinite_reverse]">
+          <span class="text-accent text-xs block mb-2 font-bold">HEALTH</span>
+          <div class="font-head text-3xl text-white mb-2">100%</div>
+          <div class="h-1 w-full bg-[#333] overflow-hidden"><div class="h-full w-full bg-accent"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Velocity Engine -->
+<section class="dev-section py-40 bg-background z-[2] relative" id="engine">
+  <div class="max-w-[1400px] mx-auto px-8">
+    <div class="text-center mb-20">
+      <h2 class="font-head text-[5rem] mb-4 text-white">VELOCITY ENGINE</h2>
+      <p class="font-body text-[1.5rem] text-text-dim max-w-[700px] mx-auto">
+        The developer experience you've always wanted. Integrate in minutes, scale for decades.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch">
+      <!-- Code Window -->
+      <div class="flex flex-col">
+        <div class="flex gap-4 mb-4">
+          <div class="px-4 py-1.5 border border-[#333] rounded-full text-sm text-[#888] cursor-pointer hover:bg-[#222] hover:text-white transition-colors bg-[#222] text-white !border-[#555]">Node.js</div>
+          <div class="px-4 py-1.5 border border-[#333] rounded-full text-sm text-[#888] cursor-pointer hover:bg-[#222] hover:text-white transition-colors">Python</div>
+          <div class="px-4 py-1.5 border border-[#333] rounded-full text-sm text-[#888] cursor-pointer hover:bg-[#222] hover:text-white transition-colors">Go</div>
+        </div>
+        
+        <div class="code-card bg-[#0a0a0a] border border-border rounded-lg p-8 shadow-2xl font-mono text-base text-[#ccc] opacity-0 -translate-x-12 h-full flex flex-col">
+          <div class="flex gap-2 mb-6">
+            <span class="w-3 h-3 rounded-full bg-[#ff5f56]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#ffbd2e]"></span>
+            <span class="w-3 h-3 rounded-full bg-[#27c93f]"></span>
+          </div>
+          <div class="flex-1">
+            <span class="text-[#cc99cd]">const</span> client = <span class="text-[#f8c555]">new</span> Obelisk({<br>
+            &nbsp;&nbsp;key: <span class="text-[#7ec699]">"obs_live_9928_x1a"</span><br>
+            });<br><br>
+            <span class="text-[#666] italic">// Deploy edge function</span><br>
+            <span class="text-[#cc99cd]">await</span> client.edge.<span class="text-[#67cdfe]">deploy</span>({<br>
+            &nbsp;&nbsp;region: <span class="text-[#7ec699]">"global"</span>,<br>
+            &nbsp;&nbsp;memory: <span class="text-[#f08d49]">1024</span>,<br>
+            &nbsp;&nbsp;runtime: <span class="text-[#7ec699]">"node_20"</span><br>
+            });<br><br>
+            console.<span class="text-[#67cdfe]">log</span>(<span class="text-[#7ec699]">"🚀 Deployment Active"</span>);
+          </div>
+          <div class="mt-auto pt-6 border-t border-dashed border-[#333] text-sm">
+            <span class="text-[#666] italic">// Live Output Stream</span><br>
+            <span class="text-[#555]">10:42:01</span> <span class="text-[#7ec699]">✓ Validating configuration...</span><br>
+            <span class="text-[#555]">10:42:02</span> <span class="text-[#7ec699]">✓ Building container [142ms]</span><br>
+            <span class="text-[#555]">10:42:03</span> <span class="text-[#7ec699]">✓ Propagating to 450 regions</span><br>
+            <span class="text-[#555]">10:42:03</span> <span class="text-[#67cdfe]">→ Deployment: obs_882a_z9</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature List -->
+      <div class="flex flex-col gap-12 justify-between">
+        <div class="feature-block border-l-2 border-[#222] pl-8 transition-all hover:border-accent translate-x-12 opacity-0">
+          <h3 class="font-head text-[2rem] mb-4 text-white">Type-Safe SDKs</h3>
+          <p class="font-body text-[1.1rem] text-text-dim mb-6 leading-relaxed">Full TypeScript support out of the box. Auto-complete your infrastructure configuration and catch errors before deployment.</p>
+          <div class="flex gap-2.5">
+            <span class="text-xs border border-[#333] px-2 py-1 rounded text-[#888]">TypeScript</span>
+            <span class="text-xs border border-[#333] px-2 py-1 rounded text-[#888]">Intellisense</span>
+          </div>
+        </div>
+
+        <div class="feature-block border-l-2 border-[#222] pl-8 transition-all hover:border-accent translate-x-12 opacity-0">
+          <h3 class="font-head text-[2rem] mb-4 text-white">Edge Native</h3>
+          <p class="font-body text-[1.1rem] text-text-dim mb-6 leading-relaxed">Your code runs on V8 isolates at the edge. Cold starts are eliminated, and latency is reduced to the theoretical minimum.</p>
+          <div class="flex gap-2.5">
+            <span class="text-xs border border-[#333] px-2 py-1 rounded text-[#888]">0ms Cold Start</span>
+            <span class="text-xs border border-[#333] px-2 py-1 rounded text-[#888]">V8 Isolate</span>
+          </div>
+        </div>
+
+        <div class="feature-block border-l-2 border-[#222] pl-8 transition-all hover:border-accent translate-x-12 opacity-0">
+          <h3 class="font-head text-[2rem] mb-4 text-white">Instant Rollback</h3>
+          <p class="font-body text-[1.1rem] text-text-dim mb-6 leading-relaxed">Made a mistake? Revert to any previous deployment version instantly with a single CLI command or API call.</p>
+          <div class="flex gap-2.5">
+            <span class="text-xs border border-[#333] px-2 py-1 rounded text-[#888]">Atomic Deploys</span>
+            <span class="text-xs border border-[#333] px-2 py-1 rounded text-[#888]">Version Control</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Terminal Section -->
+<section class="terminal-section py-32 flex justify-center bg-background z-[2] relative mb-[80vh]" id="terminal">
+  <div class="w-full max-w-[1000px] mx-8 bg-[#0a0a0a]/95 border border-border shadow-[0_0_100px_rgba(0,0,0,0.8)] overflow-hidden relative rounded">
+    <div class="absolute inset-0 z-0 bg-[repeating-linear-gradient(0deg,transparent_0px,transparent_2px,rgba(255,0,60,0.03)_3px)] pointer-events-none"></div>
+    
+    <div class="bg-[#111] p-4 flex gap-2.5 border-b border-border relative z-[2]">
+      <div class="w-3 h-3 rounded-full bg-[#333] hover:bg-[#ff5f56]"></div>
+      <div class="w-3 h-3 rounded-full bg-[#333] hover:bg-[#ffbd2e]"></div>
+      <div class="w-3 h-3 rounded-full bg-[#333] hover:bg-[#27c93f]"></div>
+    </div>
+
+    <div class="p-12 grid grid-cols-1 md:grid-cols-2 gap-16 relative z-[2]">
+      <div #terminalOutput class="font-mono text-[1.1rem] text-text">
+        <!-- JS fills this -->
+      </div>
+
+      <div class="border-l border-dashed border-[#333] pl-12 flex flex-col justify-center">
+        <h3 class="font-head text-[3.5rem] mb-4 text-accent">ENTERPRISE</h3>
+        <p class="mb-8 font-body text-text-dim">Full access to the metal. No restrictions.</p>
+        <ul class="font-body text-[1.2rem] text-text">
+          <li class="mb-4 flex items-center gap-2.5"><span class="text-accent">/</span> Unlimited Bandwidth</li>
+          <li class="mb-4 flex items-center gap-2.5"><span class="text-accent">/</span> Dedicated VPC</li>
+          <li class="mb-4 flex items-center gap-2.5"><span class="text-accent">/</span> 24/7 Priority Signal</li>
+        </ul>
+        <a href="#" class="inline-flex items-center justify-center py-3 px-8 mt-8 font-head text-[1rem] tracking-wider uppercase bg-black/80 text-text border border-border transition-all hover:text-white hover:border-accent max-w-max">
+          Contact Sales
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="fixed bottom-0 left-0 w-full h-[80vh] bg-black flex flex-col justify-center z-[1] p-16 border-t border-[#222]">
+  <div class="max-w-[1400px] mx-auto w-full h-full flex flex-col justify-between">
+    <div class="flex flex-col md:flex-row justify-between items-start">
+      <div>
+        <div class="font-head text-4xl font-bold tracking-widest text-white mb-4">OBELISK.</div>
+        <p class="font-body text-[#666]">© 2025 Obelisk Systems Inc.</p>
+      </div>
+      <div class="flex gap-8 font-body text-xl text-[#888] mt-8 md:mt-0">
+        <a href="#" class="hover:text-accent transition-colors">Legal</a>
+        <a href="#" class="hover:text-accent transition-colors">Twitter</a>
+        <a href="#" class="hover:text-accent transition-colors">GitHub</a>
+        <a href="#" class="hover:text-accent transition-colors">Status</a>
+      </div>
+    </div>
+    
+    <div class="footer-big font-head text-[25vw] leading-[0.8] text-transparent text-center mt-auto relative overflow-hidden select-none pointer-events-none" style="-webkit-text-stroke: 2px #111;">
+      <span class="relative z-10">OBELISK</span>
+      <span class="absolute top-0 left-0 w-full h-full text-[#111] z-20 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] [clip-path:polygon(0_100%,100%_100%,100%_100%,0%_100%)] reveal-text">OBELISK</span>
+    </div>
+  </div>
+</footer>
